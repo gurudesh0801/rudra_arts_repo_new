@@ -89,17 +89,23 @@ exports.adminLogout = (req, res) => {
 };
 
 exports.checkAuth = (req, res) => {
-  const token = req.cookies.adminToken;
-  // console.log(token);
+  const token = req.cookies?.adminToken;
 
   if (!token) {
-    return res.status(401).json({ authenticated: false });
+    return res.status(401).json({ authenticated: false, message: "Token not found" });
   }
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    res.json({ authenticated: true, userId: decoded.id });
+    return res.status(200).json({
+      authenticated: true,
+      userId: decoded.id,
+    });
   } catch (err) {
-    res.status(401).json({ authenticated: false });
+    console.error("JWT verification failed:", err.message);
+    return res.status(401).json({
+      authenticated: false,
+      message: "Invalid or expired token",
+    });
   }
 };
