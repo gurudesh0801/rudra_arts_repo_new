@@ -19,7 +19,7 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://rudra-arts.vercel.app"],
+    origin: ["http://localhost:5173", "https://rudra-arts-repo-new.vercel.app"],
     credentials: true,
   })
 );
